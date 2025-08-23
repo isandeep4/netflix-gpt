@@ -1,41 +1,24 @@
-import React, {useEffect} from 'react'
-import { API_OPTIONS } from '../utils/constants'
-import { useDispatch, useSelector } from 'react-redux';
-import {addTrailerVideo} from '../utils/movieSlice'
+import { useSelector } from "react-redux";
+import { UseMovieTrailer } from "./../hooks/useMovieTrailer";
 
-const VideoBackgroundNew = ({movieId}) => {
+const VideoBackgroundNew = ({ movieId }) => {
+  const trailerVideo = useSelector((store) => store.movies.trailerVideo);
 
-  const disptach = useDispatch();
-  const trailerVideo = useSelector(store=>store.movies.trailerVideo);
-
-  const getMovieVideos = async () => {
-    if(!movieId){
-      return;
-    }
-    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`, API_OPTIONS);
-    const json = await data.json();
-    
-
-    const filteredData = json.results.filter((video)=>video.type === "Trailer")
-    const trailer = filteredData.length ? filteredData[0] : json.results[0];
-    disptach(addTrailerVideo(trailer));
-  }
-
-  useEffect(()=>{
-    getMovieVideos();
-  },[])
+  UseMovieTrailer(movieId);
 
   return (
-    <div>
+    <div className="w-screen max-h-[800px] overflow-auto no-scrollbar">
       <iframe
-        className='w-screen aspect-video'
-        src={"https://www.youtube.com/embed/" + trailerVideo?.key+ "?&autoplay=1&mute=1"}
+        className="w-screen aspect-video"
+        src={
+          "https://www.youtube.com/embed/" +
+          trailerVideo?.key +
+          "?&autoplay=1&mute=1"
+        }
         title="Video Player"
-      >
-        
-      </iframe>
+      ></iframe>
     </div>
-  )
-}
+  );
+};
 
 export default VideoBackgroundNew;
