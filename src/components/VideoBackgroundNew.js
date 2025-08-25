@@ -9,7 +9,7 @@ const VideoBackgroundNew = ({ movieId }) => {
   return (
     <div className="w-screen max-h-[800px] overflow-auto no-scrollbar">
       <iframe
-        className="w-screen aspect-video"
+        className="w-screen aspect-video pt-28 md:pt-0"
         src={
           "https://www.youtube.com/embed/" +
           trailerVideo?.key +
