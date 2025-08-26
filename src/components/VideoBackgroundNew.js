@@ -7,7 +7,7 @@ const VideoBackgroundNew = ({ movieId }) => {
   UseMovieTrailer(movieId);
 
   return (
-    <div className="w-screen max-h-[800px] overflow-auto no-scrollbar">
+    <div className="w-screen max-h-[800px] pt-28 md:pt-0">
       <iframe
         className="w-screen aspect-video"
         src={
