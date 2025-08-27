@@ -1,11 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { BG_URL } from "./../utils/constants";
 import { UseGPTApi } from "../hooks/useGPTApi";
 import GPTMovieSuggestion from "./GPTMovieSuggestion";
+import { resetMovies } from "../utils/gptSlice";
+import { useDispatch } from "react-redux";
 
 const GptSearch = () => {
   const searchText = useRef(null);
   const { fetchGptRecommendation } = UseGPTApi();
+  const dispatch = useDispatch();
 
   const handleSearchClick = async () => {
     const gptQuery =
@@ -14,6 +17,9 @@ const GptSearch = () => {
       ". give me only 5 movies, comma separated like the example given ahead. Example result: batman, superman, forrestgump, interstellar.";
     fetchGptRecommendation(gptQuery);
   };
+  useEffect(() => {
+    dispatch(resetMovies());
+  }, []);
 
   return (
     <div className="flex flex-col">
